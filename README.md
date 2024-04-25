@@ -2,6 +2,9 @@
 
 Converts your Ecto Repo into a Mermaid ERD diagram
 
+> [!WARNING]
+> For now it only supports PostgreSQL repos
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed

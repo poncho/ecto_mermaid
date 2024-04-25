@@ -3,16 +3,13 @@ defmodule EctoMermaid do
   Documentation for `EctoMermaid`.
   """
 
-  @doc """
-  Hello world.
+  alias EctoMermaid.Db
 
-  ## Examples
+  @spec build_erd(module(), Path.t()) :: :ok | {:error, String.t()}
+  def build_erd(repo, _path) do
+    tables = Db.tables(repo)
 
-      iex> EctoMermaid.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    IO.inspect(tables)
+    :ok
   end
 end
