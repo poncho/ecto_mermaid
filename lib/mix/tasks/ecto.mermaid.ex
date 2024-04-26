@@ -30,23 +30,12 @@ defmodule Mix.Tasks.Ecto.Mermaid do
 
     Enum.each(repos, fn repo ->
       ensure_repo(repo, args)
-      path = slug_repo_name(repo)
+      path = EctoMermaid.Repo.slug(repo) <> ".md"
 
       Ecto.Migrator.with_repo(repo, fn repo ->
         build_erd(repo, path)
       end)
     end)
-  end
-
-  defp slug_repo_name(repo) do
-    slug_name =
-      repo
-      |> to_string()
-      |> String.downcase()
-      |> String.trim_leading("elixir.")
-      |> String.replace(".", "_")
-
-    slug_name <> ".md"
   end
 
   defp build_erd(repo, path) do
