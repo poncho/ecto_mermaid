@@ -1,23 +1,32 @@
 # EctoMermaid
 
-Converts your Ecto Repo into a Mermaid ERD diagram
+Converts your Ecto Repo into a Mermaid ER diagram file
 
 > [!WARNING]
 > For now it only supports PostgreSQL repos
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ecto_mermaid` to your list of dependencies in `mix.exs`:
+Add `:ecto_mermaid` to the list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:ecto_mermaid, "~> 0.1.0"}
+    {:ecto_mermaid, "~> 0.1.0", only: :dev}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/ecto_mermaid>.
+## Usage
+
+You can create a Markdown file with a Mermaid ER Diagram for each of the repos in your project.
+
+```bash
+mix ecto.mermaid
+```
+
+You can specify a single repo with the `-r` or `--repo` args:
+
+```bash
+mix ecto.mermaid -r MyApp.Repo
+```
