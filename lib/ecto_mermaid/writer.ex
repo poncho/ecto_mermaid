@@ -1,4 +1,6 @@
 defmodule EctoMermaid.Writer do
+  @moduledoc false
+
   @spec open_mermaid(File.io_device()) :: :ok
   def open_mermaid(file) do
     IO.write(file, "```mermaid\n")
@@ -36,6 +38,7 @@ defmodule EctoMermaid.Writer do
     IO.write(file, buffer)
   end
 
+  @spec draw_relationship(File.io_device(), String.t(), String.t()) :: :ok
   def draw_relationship(file, table_name, relationship) do
     IO.write(file, ~s/#{table_name} ||--|{ #{relationship} : ""\n/)
   end
@@ -46,6 +49,7 @@ defmodule EctoMermaid.Writer do
     "\t"
   end
 
+  @spec tab(integer()) :: String.t()
   defp tab(tab_level) do
     String.duplicate("\t", tab_level)
   end

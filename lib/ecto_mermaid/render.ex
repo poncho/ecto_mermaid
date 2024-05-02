@@ -1,4 +1,6 @@
 defmodule EctoMermaid.Render do
+  @moduledoc false
+
   defstruct [
     :file,
     :repo,
@@ -40,6 +42,7 @@ defmodule EctoMermaid.Render do
     :not_supported
   end
 
+  @spec remove_elixir_prefix(module()) :: String.t()
   defp remove_elixir_prefix(module) do
     module
     |> Module.split()

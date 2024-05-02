@@ -56,6 +56,7 @@ defmodule EctoMermaid do
     add_relationships(render, table_name)
   end
 
+  @spec add_relationships(Render.t(), String.t()) :: Render.t()
   defp add_relationships(render, table_name) do
     render.repo
     |> render.db_render_adapter.relationships(table_name)

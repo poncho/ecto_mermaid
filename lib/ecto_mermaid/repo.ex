@@ -1,4 +1,6 @@
 defmodule EctoMermaid.Repo do
+  @moduledoc false
+
   def slug(repo) when is_atom(repo) do
     repo
     |> to_string()

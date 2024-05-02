@@ -7,18 +7,8 @@ defmodule Mix.Tasks.Ecto.Mermaid do
   @default_opts []
 
   @aliases [r: :repo]
-  #   f: :force,
-  #   q: :quiet,
-  #   r: :repo
-  # ]
 
   @switches [repo: [:keep, :string]]
-  #   force: :boolean,
-  #   force_drop: :boolean,
-  #   quiet: :boolean,
-  #   no_compile: :boolean,
-  #   no_deps_check: :boolean
-  # ]
 
   @impl true
   def run(args) do
