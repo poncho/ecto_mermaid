@@ -1,4 +1,6 @@
 defmodule EctoMermaid.Adapter do
+  @moduledoc false
+
   @type repo :: module()
 
   @callback tables(repo) :: [String.t()]
