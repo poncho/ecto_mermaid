@@ -36,6 +36,10 @@ defmodule EctoMermaid.Writer do
     IO.write(file, buffer)
   end
 
+  def draw_relationship(file, table_name, relationship) do
+    IO.write(file, ~s/#{table_name} ||--|{ #{relationship} : ""\n/)
+  end
+
   # It should be a macro tbh
   @spec tab(integer()) :: String.t()
   defp tab(1) do

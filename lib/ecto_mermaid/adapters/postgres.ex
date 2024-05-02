@@ -27,4 +27,20 @@ defmodule EctoMermaid.Adapters.Postgres do
     # TODO: Maybe use data_type for some types that look better
     for [name, _data_type, udt_name] <- rows, do: {name, udt_name}
   end
+
+  def relationships(repo, table_name) do
+    query = """
+    SELECT pg_catalog.pg_get_constraintdef(r.oid, true) as condef
+    FROM pg_catalog.pg_constraint r
+    WHERE r.conrelid = '#{@schema}.#{table_name}'::regclass
+    AND r.contype = 'f';
+    """
+
+    {:ok, %{rows: rows}} = repo.query(query)
+
+    for [fk] <- rows do
+      [_, table] = Regex.run(~r/REFERENCES (\w+)/, fk)
+      table
+    end
+  end
 end

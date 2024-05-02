@@ -39,7 +39,7 @@ defmodule EctoMermaid do
 
   @spec add_tables(Render.t()) :: Render.t()
   defp add_tables(render) do
-    tables = render.db_render_adapter.tables(render.repo) |> Enum.take(4)
+    tables = render.db_render_adapter.tables(render.repo)
 
     Enum.each(tables, fn table_name ->
       add_table(render, table_name)
@@ -51,7 +51,19 @@ defmodule EctoMermaid do
   @spec add_table(Render.t(), String.t()) :: :ok
   defp add_table(render, table_name) do
     columns = render.db_render_adapter.columns(render.repo, table_name)
-    Writer.draw_table(render.file, table_name, columns)
+    :ok = Writer.draw_table(render.file, table_name, columns)
+
+    add_relationships(render, table_name)
+  end
+
+  defp add_relationships(render, table_name) do
+    render.repo
+    |> render.db_render_adapter.relationships(table_name)
+    |> Enum.each(fn relationship ->
+      Writer.draw_relationship(render.file, table_name, relationship)
+    end)
+
+    render
   end
 
   @spec close(Render.t()) :: :ok
