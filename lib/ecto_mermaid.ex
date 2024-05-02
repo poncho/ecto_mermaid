@@ -4,19 +4,29 @@ defmodule EctoMermaid do
   """
 
   alias EctoMermaid.{
-    Db,
+    Render,
     Writer
   }
 
   @spec build_erd(module(), Path.t()) :: :ok | {:error, String.t()}
   def build_erd(repo, path) do
-    repo
-    |> new(path)
-    |> add_tables(repo)
+    case new(repo, path) do
+      %Render{} = render ->
+        do_build_erd(render)
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  @spec do_build_erd(Render.t()) :: :ok
+  defp do_build_erd(render) do
+    render
+    |> add_tables()
     |> close()
   end
 
-  @spec new(module(), Path.t()) :: File.io_device()
+  @spec new(module(), Path.t()) :: Render.t() | {:error, String.t()}
   defp new(repo, path) do
     file = File.open!(path, [:write, :utf8])
 
@@ -24,26 +34,29 @@ defmodule EctoMermaid do
 
     :ok = Writer.add_title(file, repo)
 
-    file
+    Render.new(file, repo)
   end
 
-  defp add_tables(file, repo) do
-    tables = Db.tables(repo)
+  @spec add_tables(Render.t()) :: Render.t()
+  defp add_tables(render) do
+    tables = render.db_render_adapter.tables(render.repo) |> Enum.take(4)
 
     Enum.each(tables, fn table_name ->
-      add_table(file, repo, table_name)
+      add_table(render, table_name)
     end)
 
-    file
+    render
   end
 
-  defp add_table(file, repo, table_name) do
-    columns = Db.columns(repo, table_name)
-    Writer.draw_table(file, table_name, columns)
+  @spec add_table(Render.t(), String.t()) :: :ok
+  defp add_table(render, table_name) do
+    columns = render.db_render_adapter.columns(render.repo, table_name)
+    Writer.draw_table(render.file, table_name, columns)
   end
 
-  defp close(file) do
-    Writer.close_mermaid(file)
-    File.close(file)
+  @spec close(Render.t()) :: :ok
+  defp close(render) do
+    Writer.close_mermaid(render.file)
+    File.close(render.file)
   end
 end

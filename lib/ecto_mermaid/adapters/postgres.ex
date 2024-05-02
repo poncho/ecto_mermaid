@@ -1,12 +1,11 @@
-defmodule EctoMermaid.Db do
+defmodule EctoMermaid.Adapters.Postgres do
   @moduledoc false
+
+  @behaviour EctoMermaid.Adapter
 
   @schema "public"
 
-  @doc """
-  Returns all tables from the given Repo DB
-  """
-  @spec tables(module()) :: [String.t()]
+  @impl true
   def tables(repo) do
     query = "SELECT table_name FROM information_schema.tables WHERE table_schema = '#{@schema}'"
     {:ok, %{rows: rows}} = repo.query(query)
@@ -14,6 +13,7 @@ defmodule EctoMermaid.Db do
     for [table] <- rows, table != "schema_migrations", do: table
   end
 
+  @impl true
   def columns(repo, table_name) do
     query = """
     SELECT column_name, data_type, udt_name
