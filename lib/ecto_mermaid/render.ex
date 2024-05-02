@@ -38,6 +38,10 @@ defmodule EctoMermaid.Render do
     {:ok, EctoMermaid.Adapters.Postgres}
   end
 
+  defp db_render_adapter(Ecto.Adapters.SQLite3) do
+    {:ok, EctoMermaid.Adapters.Sqlite3}
+  end
+
   defp db_render_adapter(_) do
     :not_supported
   end
