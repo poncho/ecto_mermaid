@@ -29,15 +29,13 @@ defmodule EctoMermaid.Adapters.Sqlite3 do
 
   def relationships(repo, table_name) do
     query = """
-    SELECT * FROM pragma_foreign_key_list('#{table_name}');
+    SELECT "table" FROM pragma_foreign_key_list('#{table_name}');
     """
 
     {:ok, %{rows: rows}} = repo.query(query)
 
-    for [fk] <- rows do
-      ""
+    for [table] <- rows do
+      table
     end
-
-    []
   end
 end
