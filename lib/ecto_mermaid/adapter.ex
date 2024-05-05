@@ -1,9 +1,12 @@
 defmodule EctoMermaid.Adapter do
   @moduledoc false
 
-  @type repo :: module()
+  @typep repo :: module()
+  @typep table_name :: String.t()
 
   @callback tables(repo) :: [String.t()]
 
-  @callback columns(repo, String.t()) :: [{String.t(), String.t()}]
+  @callback columns(repo, table_name) :: [{String.t(), String.t()}]
+
+  @callback relationships(repo, table_name) :: [String.t()]
 end

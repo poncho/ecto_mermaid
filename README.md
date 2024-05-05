@@ -3,7 +3,7 @@
 Converts your Ecto Repo into a Mermaid ER diagram file
 
 > [!WARNING]
-> For now it only supports PostgreSQL repos
+> For now it only supports PostgreSQL and SQLite3 repos
 
 ## Installation
 

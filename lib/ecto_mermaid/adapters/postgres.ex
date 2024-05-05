@@ -24,10 +24,10 @@ defmodule EctoMermaid.Adapters.Postgres do
 
     {:ok, %{rows: rows}} = repo.query(query)
 
-    # TODO: Maybe use data_type for some types that look better
     for [name, _data_type, udt_name] <- rows, do: {name, udt_name}
   end
 
+  @impl true
   def relationships(repo, table_name) do
     query = """
     SELECT pg_catalog.pg_get_constraintdef(r.oid, true) as condef

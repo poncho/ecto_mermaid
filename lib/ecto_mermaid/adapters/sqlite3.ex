@@ -27,6 +27,7 @@ defmodule EctoMermaid.Adapters.Sqlite3 do
     for [name, type] <- rows, do: {name, type}
   end
 
+  @impl true
   def relationships(repo, table_name) do
     query = """
     SELECT "table" FROM pragma_foreign_key_list('#{table_name}');
