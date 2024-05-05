@@ -1,6 +1,13 @@
 defmodule EctoMermaid do
   @moduledoc """
-  Documentation for `EctoMermaid`.
+  Ecto Mermaid is an Ecto extension that lets you create
+  Entity Relationship Diagrams for your Repos using the
+  `mix ecto.mermaid` task
+
+  > For now only Postgres and SQLite 3 repos are supported
+
+  For more information check the [ecto.mermaid](https://hexdocs.pm/ecto_mermaid/Mix.Tasks.Ecto.Mermaid.html) documentation.
+
   """
 
   alias EctoMermaid.{

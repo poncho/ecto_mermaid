@@ -10,6 +10,23 @@ defmodule Mix.Tasks.Ecto.Mermaid do
 
   @switches [repo: [:keep, :string]]
 
+  @moduledoc """
+  Create the Entity Relationship Diagram for the project repos.
+
+  Every repo will get its own Markdown file as a result. If the `-r`
+  option is given it will only create a file for the given repo.
+
+  ## Examples
+
+      $ mix ecto.mermaid
+      $ mix ecto.mermaid -r App.Repo
+
+  ## Command line options
+
+    * `-r`, `--repo` - the repo to create the ERD for
+
+  """
+
   @impl true
   def run(args) do
     Application.ensure_all_started(:ecto)
